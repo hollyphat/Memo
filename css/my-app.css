@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'work-sans';
+    src: url('../fonts/WorkSans-Regular.otf') format("opentype");
+}
+
+html,body{
+    font-family: 'work-sans';
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.img-responsive{
+    max-width: 100%;
+    height: auto;
+}
+
+.img-responsive2{
+    max-width: 100%;
+    height: auto;
+}
+
+.center{
+    text-align: center;
+}
+
+.hide{
+    display: none !important;
+}
