@@ -232,7 +232,7 @@ myApp.onPageInit('create2',function(page){
 
 myApp.onPageInit('create',function(page){
    //image1
-    create_img('Y','image1');
+    
 });
 myApp.onPageInit('create',function(page){
 
