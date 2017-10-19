@@ -16,8 +16,8 @@ var inbox = sessionStorage.getItem("inbox");
 var sent = sessionStorage.getItem("sent");
 var read = sessionStorage.getItem("read");
 
-var url = "http://freelance.in/mobile_memo/api.php";
-//var url = 'http://app.onlinemedia.com.ng/memo/api.php';
+//var url = "http://freelance.in/mobile_memo/api.php";
+var url = 'http://app.onlinemedia.com.ng/memo/api.php';
 
 // Export selectors engine
 var $$ = Dom7;
