@@ -30,3 +30,8 @@ input::-webkit-inner-spin-button {
 .hide{
     display: none !important;
 }
+
+.card *{
+    word-wrap: break-word !important;
+    white-space: normal;
+}

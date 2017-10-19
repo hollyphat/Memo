@@ -18,22 +18,69 @@
 
         <div class="content-block">
 
-            <form class="list-block" action="" method="post" role="form" id="sending-form">
-                <ul id="the-list">
+            <form class="list-block" name="s-form" action="" method="post" role="form" id="sending-form">
+                <div class="list-block">
+                    <ul>
+                        <!-- Smart select item -->
+                        <li>
+                            <!-- Additional "smart-select" class -->
+                            <a href="#" class="item-link smart-select">
+                                <!-- select -->
+                                <select name="receiver" class="smart_1">
 
-                    <li class="align-top">
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">Your Memo</div>
-                                <div class="item-input">
-                                    <textarea class="resizable" required="" placeholder="Your Memo" name="msg"></textarea>
+                                </select>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <!-- Select label -->
+                                        <div class="item-title">Receiver</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <!-- Additional "smart-select" class -->
+                            <a href="#" class="item-link smart-select">
+                                <!-- select -->
+                                <select name="cc" multiple class="smart_2">
+
+                                </select>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <!-- Select label -->
+                                        <div class="item-title">CC</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Memo Title</div>
+                                    <div class="item-input">
+                                        <input type="text" autocomplete="off" required="" id="title" placeholder="Memo Title"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
 
-                <input type="hidden" name="user_id" id="the-user-id">
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Your Memo</div>
+                                    <div class="item-input">
+                                        <textarea class="resizable" required="" placeholder="Your Memo" id="memo" name="msg"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+
 
                 <div class="content-block">
                     <input type="submit" class="button button-fill button-raised" value="Send" name="send_msg">
