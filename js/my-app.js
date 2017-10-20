@@ -76,6 +76,35 @@ myApp.onPageInit('login-screen-embedded', function (page) {
 
 myApp.onPageInit('index', function (page) {
     //console.log("okay");
+
+    var ft = sessionStorage.getItem("ft");
+    //console.log(ft);
+    if((ft == null) || (ft == "")){
+        //show splash
+        sessionStorage.setItem("ft",1);
+        document.getElementById('splash-page').style.display = "block";
+
+        setTimeout(function(){
+                show_main()
+            },
+            5000);
+    }else{
+        //show main
+        show_main();
+    }
+
+
+    function show_main()
+    {
+        //console.log("hello");
+        document.getElementById('splash-page').innerHTML = "";
+        document.getElementById('splash-page').style.display = "none";
+        $$("#splash-page").remove();
+        $$("#main-page").removeClass('hide');
+        document.getElementById('main-page').style.display = "block";
+
+        //myApp.onPageInit('index');
+    }
     if(is_login()){
         $$("#home").click();
     }
@@ -230,10 +259,11 @@ myApp.onPageInit('create2',function(page){
 
 });
 
-myApp.onPageInit('create',function(page){
-   //image1
-    
-});
+//myApp.onPageInit('create',function(page){
+//   //image1
+//    //create_img('Y','image1');
+//});
+
 myApp.onPageInit('create',function(page){
 
 
@@ -351,6 +381,203 @@ myApp.onPageInit('create',function(page){
     });
 
 
+});
+
+
+myApp.onPageInit('inbox',function(page){
+    if(!is_login()){
+        window.location = "main.html";
+    }
+
+    myApp.showPreloader("Loading memo");
+
+    $$.ajax({
+        url: url,
+        data: {
+            'load_inbox': '',
+            'user': sessionStorage.getItem("user_id")
+        },
+        success: function(f){
+            myApp.hidePreloader();
+            $$(".msg-list").html(f);
+        },
+        error: function(err){
+            console.log(err);
+            myApp.hidePreloader();
+            myApp.alert("Network error, try again");
+        },
+        timeout: 60000
+    });
+
+
+
+    $$("body").on('click', '.view-msg', function(e) {
+
+        e.preventDefault();
+
+        //console.log(this);
+        //alert(d);
+        var d = $$(this).attr('data-id');
+        sessionStorage.setItem("in_id",d);
+        //console.log(d);
+
+        //return;
+        //sessionStorage.setItem("drug_id",id);
+        /* Act on the event */
+    });
+});
+
+myApp.onPageInit('read',function(page){
+    if(!is_login()){
+        window.location = "main.html";
+    }
+
+
+    myApp.showPreloader("Loading memo");
+
+    $$.ajax({
+        url: url,
+        data: {
+            'load_read': '',
+            'user': sessionStorage.getItem("user_id")
+        },
+        success: function(f){
+            myApp.hidePreloader();
+            $$(".msg-list").html(f);
+        },
+        error: function(err){
+            console.log(err);
+            myApp.hidePreloader();
+            myApp.alert("Network error, try again");
+        },
+        timeout: 60000
+    });
+
+    $$("body").on('click', '.view-msg', function(e) {
+
+        e.preventDefault();
+
+        //console.log(this);
+        //alert(d);
+        var d = $$(this).attr('data-id');
+        sessionStorage.setItem("in_id",d);
+        //console.log(d);
+
+        //return;
+        //sessionStorage.setItem("drug_id",id);
+        /* Act on the event */
+    });
+});
+
+
+
+myApp.onPageInit('sent',function(page){
+    if(!is_login()){
+        window.location = "main.html";
+    }
+
+
+    myApp.showPreloader("Loading memo...");
+
+    $$.ajax({
+        url: url,
+        data: {
+            'load_sent': '',
+            'user': sessionStorage.getItem("user_id")
+        },
+        success: function(f){
+            myApp.hidePreloader();
+            $$(".msg-list").html(f);
+        },
+        error: function(err){
+            console.log(err);
+            myApp.hidePreloader();
+            myApp.alert("Network error, try again");
+        },
+        timeout: 60000
+    });
+
+    $$("body").on('click', '.view-msg', function(e) {
+
+        e.preventDefault();
+
+        //console.log(this);
+        //alert(d);
+        var d = $$(this).attr('data-id');
+        sessionStorage.setItem("s_id",d);
+        //console.log(d);
+
+        //return;
+        //sessionStorage.setItem("drug_id",id);
+        /* Act on the event */
+    });
+});
+
+
+myApp.onPageInit('view_inbox',function(page){
+    myApp.showPreloader("Loading memo details");
+
+    if(!is_login()){
+        window.location = "main.html";
+    }
+    var id = sessionStorage.getItem("in_id");
+    var user = sessionStorage.getItem("user_id");
+
+    $$.ajax({
+       'url': url,
+        'data': {
+            'load_inbox_msg': '',
+            'user': user,
+            'message_id': id
+        },
+        dataType: 'json',
+        timeout: 60000,
+        success:function(f){
+            $$("#title").html(f.title);
+            $$("#info").html(f.sender+" - "+ f.title);
+            $$("#msg-content").html(f.msg);
+            $$("#msg-time").html(f.date_sent);
+            myApp.hidePreloader();
+        },
+        error:function(err){
+            console.log(err.responseText);
+            myApp.hidePreloader();
+            myApp.alert("Network error, try agaan");
+        }
+    });
+});
+
+myApp.onPageInit('view_sent',function(page){
+    myApp.showPreloader("Loading memo details");
+
+    if(!is_login()){
+        window.location = "main.html";
+    }
+    var id = sessionStorage.getItem("s_id");
+    var user = sessionStorage.getItem("user_id");
+
+    $$.ajax({
+        'url': url,
+        'data': {
+            'load_sent_msg': '',
+            'user': user,
+            'message_id': id
+        },
+        dataType: 'json',
+        timeout: 60000,
+        success:function(f){
+            $$("#title").html(f.title);
+            $$("#info").html("Receivers :"+f.receiver);
+            $$("#msg-content").html(f.msg);
+            $$("#msg-time").html(f.date_sent);
+            myApp.hidePreloader();
+        },
+        error:function(err){
+            console.log(err.responseText);
+            myApp.hidePreloader();
+            myApp.alert("Network error, try agaan");
+        }
+    });
 });
 
 function is_login(){

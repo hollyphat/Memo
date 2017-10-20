@@ -1,4 +1,4 @@
-<div data-page="inbox" class="page">
+<div data-page="view_sent" class="page">
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
     <div class="navbar navbar-fixed">
@@ -13,11 +13,21 @@
     </div>
     <div class="page-content">
         <div class="content-block-title">
-            <h3 class="center"><i class="material-icons">inbox</i> Inbox</h3>
+            <h3 class="center">
+                <span id="title" style="text-transform: capitalize;"></span>
+            </h3>
         </div>
 
-        <div class="msg-list">
-
+        <div class="card">
+            <div class="card-header"><span id="info"></span></div>
+            <div class="card-content">
+                <div class="card-content-inner">
+                    <p id="msg-content"></p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span id="msg-time"></span>
+            </div>
         </div>
     </div>
 
