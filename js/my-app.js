@@ -35,7 +35,9 @@ myApp.onPageInit('login-screen-embedded', function (page) {
         var usern = $$("#username").val();
         var password = $$("#password").val();
         var f_name = $$("#name").val();
-        myApp.showPreloader("Signing up");
+        var email = $$("#email").val();
+        var phone = $$("#phone").val();
+        myApp.showPreloader("Signing up...");
 
         $$.ajax({
            url: url,
@@ -43,7 +45,9 @@ myApp.onPageInit('login-screen-embedded', function (page) {
                 'register': '',
                 'name': f_name,
                 'username' : usern,
-                'password' : password
+                'password' : password,
+                'phone': phone,
+                'email': email
             },
             type: 'POST',
             dataType: 'json',
@@ -55,6 +59,8 @@ myApp.onPageInit('login-screen-embedded', function (page) {
                     $$("#username").val('');
                     $$("#name").val('');
                     $$("#password").val('');
+                    $$("#email").val('');
+                    $$("#phone").val('');
                 }
                 myApp.hidePreloader();
 
@@ -72,6 +78,46 @@ myApp.onPageInit('login-screen-embedded', function (page) {
 });
 
 
+myApp.onPageInit('password', function (page) {
+    $$("#password-form").on('submit',function(e){
+        e.preventDefault();
+        var usern = $$("#username").val();
+
+        var email = $$("#email").val();
+        myApp.showPreloader("Resetting Password...");
+
+        $$.ajax({
+            url: url,
+            data: {
+                'reset_pass': '',
+                'username' : usern,
+                'email': email
+            },
+            type: 'POST',
+            dataType: 'json',
+            crossDomain : true,
+            cache: false,
+            success:function(f){
+                var ok = f.ok;
+                if(ok == 1){
+                    $$("#username").val('');
+                    $$("#email").val('');
+                }
+                myApp.hidePreloader();
+
+                myApp.addNotification({
+                    message : f.msg
+                });
+            },
+            error:function(err){
+                myApp.hidePreloader();
+                myApp.alert("Network error, try again");
+                console.log(err.responseText);
+            },
+            timeout: 60000
+        });
+    });
+});
 
 
 myApp.onPageInit('index', function (page) {
@@ -308,7 +354,6 @@ myApp.onPageInit('create',function(page){
             myApp.alert("Network error");
         },
         timeout: 60000
-
     });
 
     $$("#sending-form").on('submit',function(e){
@@ -370,6 +415,9 @@ myApp.onPageInit('create',function(page){
                 sessionStorage.setItem("inbox",stats['inbox']);
                 sessionStorage.setItem("sent",stats['sent']);
                 sessionStorage.setItem("read",stats['read']);
+
+                $$("#memo").val('');
+                $$("#title").val('');
             },
             error:function(err){
                 console.log(err.responseText);
@@ -600,7 +648,19 @@ function messageCount(type){
 }
 
 function update_stat(){
+
     var u_id = sessionStorage.getItem("user_id");
+
+    var inbox_l = sessionStorage.getItem("inbox");
+    var sent_l = sessionStorage.getItem("sent");
+    var read_l = sessionStorage.getItem("read");
+    var f_name = sessionStorage.getItem("full_name");
+
+    $$("#inbox-count, .inbox-count").html(inbox_l);
+    $$("#read-count, .read-count").html(read_l);
+    $$("#sent-count, .sent-count").html(sent_l);
+    $$("#full-name, .full-name").html(f_name);
+
     $$.ajax({
         url: url,
         data:{
@@ -617,14 +677,15 @@ function update_stat(){
             sessionStorage.setItem("sent",stats['sent']);
             sessionStorage.setItem("read",stats['read']);
 
-            var inbox_l = sessionStorage.getItem("inbox");
-            var sent_l = sessionStorage.getItem("sent");
-            var read_l = sessionStorage.getItem("read");
-            var f_name = sessionStorage.getItem("full_name");
+            inbox_l = sessionStorage.getItem("inbox");
+            sent_l = sessionStorage.getItem("sent");
+            read_l = sessionStorage.getItem("read");
+            //f_name = sessionStorage.getItem("full_name");
+
             $$("#inbox-count, .inbox-count").html(inbox_l);
             $$("#read-count, .read-count").html(read_l);
             $$("#sent-count, .sent-count").html(sent_l);
-            $$("#full-name, .full-name").html(f_name);
+            //$$("#full-name, .full-name").html(f_name);
         },
         error:function(err){
             myApp.addNotification({
