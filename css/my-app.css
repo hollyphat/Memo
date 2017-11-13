@@ -35,3 +35,22 @@ input::-webkit-inner-spin-button {
     word-wrap: break-word !important;
     white-space: normal;
 }
+
+#title{
+    word-wrap: break-word !important;
+    white-space: normal;
+}
+
+.img-icon{
+    background-color: teal;
+    color: #fff;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.6em;
+    border-radius: 16px;
+    text-transform: uppercase;
+}
